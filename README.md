@@ -75,7 +75,7 @@ Above that, _The Onion Box_ is able to display Tor network status protocol data 
 
 
 ## The Web Interface
-_The Onion Box_ generates a 'web page' that displays information regarding your Tor node. This information is split up into a number of sections. If a section is displayed and how the section looks like, depends on the data your box received from the Tor node monitored or knows about it from the Tor network status protocol. The web interface is generated on demand based on the latest data available.
+_The Onion Box_ generates a 'web page' that displays information regarding your Tor node. This information is split up into a number of sections. If a section is displayed and how the section looks like, depends on the data your box received from the Tor node monitored or knows about it from the Tor network status protocol. The web interface is generated on demand based on the latest data able.
 
 > Tip: If a dedicated section is not displayed, just reload the page. Press `F5` or `command + R` to re-run the page creation process.
 
@@ -1341,7 +1341,7 @@ proxy_path = /theonionbox
 Now everything should work as expected.
 
 ## *The Onion Box* Docker support
-_The Onion Box_ Docker image is avialable on [hub.docker.com](https://hub.docker.com/search?q=theonionbox&type=image). The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* Docker image building process. Please be aware, that these Docker images for *The Onion Box* only supports [password authentication](#password-authentication).
+_The Onion Box_ Docker image is available on [hub.docker.com](https://hub.docker.com/search?q=theonionbox&type=image). The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* Docker image building process. Please be aware, that these Docker images for *The Onion Box* only supports [password authentication](#password-authentication).
 
 To build an image, change to the Docker directory and run `sudo docker build -t theonionbox .`
 > If you've run `pip` to perform the [installation](#installation) of your Onion Box, you'll find the Docker directory within the [`service`](#verification-of-the-installation) directory.
