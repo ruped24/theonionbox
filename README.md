@@ -1347,7 +1347,7 @@ The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engi
 To build an image, change to the Docker directory and run `sudo docker build -t theonionbox .`
 > If you've run `pip` to perform the [installation](#installation) of your Onion Box, you'll find the Docker directory within the [`service`](#verification-of-the-installation) directory.
 
-To launch *The Onion Box*, run `sudo docker run --network host -p 8080:8080 theonionbox .`
+To launch *The Onion Box*, run `sudo docker run --network host -p 8080:8080 theonionbox`
 
 
 ## Usage Monitoring
