@@ -1344,7 +1344,7 @@ Now everything should work as expected.
 ## *The Onion Box* Docker support
 The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* Docker image building process. Prebuild images are avialable on [hub.docker.com](https://hub.docker.com/search?q=theonionbox&type=image). Please be aware, that these Docker images for *The Onion Box* only supports [password authentication](#password-authentication).
 
-To build an image, change to the Docker directory and run `sudo docker build -t theonionbox .`.
+To build an image, change to the Docker directory and run `sudo docker build -t theonionbox .`
 > If you've run `pip` to perform the [installation](#installation) of your Onion Box, you'll find the Docker directory within the [`service`](#verification-of-the-installation) directory.
 
 To then launch *The Onion Box* within the created Docker image, run `sudo docker run --network host -p 8080:8080 theonionbox`.
