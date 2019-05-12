@@ -1342,7 +1342,7 @@ proxy_path = /theonionbox
 Now everything should work as expected.
 
 ## *The Onion Box* Docker support
-Prebuild Docker images are avialable on [hub.docker.com](https://hub.docker.com/search?q=theonionbox&type=image). The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* Docker image building process. . Please be aware, that these Docker images for *The Onion Box* only supports [password authentication](#password-authentication).
+Prebuild Docker images are avialable on [hub.docker.com](https://hub.docker.com/search?q=theonionbox&type=image). The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* Docker image building process. Please be aware, that these Docker images for *The Onion Box* only supports [password authentication](#password-authentication).
 
 To build an image, change to the Docker directory and run `sudo docker build -t theonionbox .`
 > If you've run `pip` to perform the [installation](#installation) of your Onion Box, you'll find the Docker directory within the [`service`](#verification-of-the-installation) directory.
