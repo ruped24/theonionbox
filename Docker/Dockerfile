@@ -1,5 +1,4 @@
 FROM python:2.7
-
 LABEL maintainer="ruped24@gmail.com"
 
 RUN pip install \
