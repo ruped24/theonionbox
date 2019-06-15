@@ -1,10 +1,10 @@
 # The Onion Box
 [![GitHub tag](https://img.shields.io/github/tag/ralphwetzel/theonionbox.svg?style=flat-square&label=GitHub)](https://github.com/ralphwetzel/theonionbox/releases/latest)
 ![Github commits (since latest release)](https://img.shields.io/github/commits-since/ralphwetzel/theonionbox/latest.svg?style=flat-square)
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/ralphwetzel/theonionbox/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/ralphwetzel/theonionbox/blob/master/LICENSE)
 [![Latest PyPi](https://img.shields.io/pypi/v/theonionbox.svg?style=flat-square)](https://pypi.org/project/theonionbox)
 ![Supported Python versions](https://img.shields.io/pypi/pyversions/theonionbox.svg?style=flat-square)
-![Status](https://img.shields.io/pypi/status/theonionbox.svg?style=flat-square) [![HitCount](http://hits.dwyl.io/ruped24/ruped24/theonionbox.svg)](http://hits.dwyl.io/ruped24/ruped24/theonionbox)
+![Status](https://img.shields.io/pypi/status/theonionbox.svg?style=flat-square) [![HitCount](http://hits.dwyl.io/ruped24/ruped24/theonionbox.svg?style=flat-square)](http://hits.dwyl.io/ruped24/ruped24/theonionbox)
 
 
 _The Onion Box_ provides a web interface to monitor the operation of
