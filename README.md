@@ -5,6 +5,7 @@
 ![Supported Python versions](https://img.shields.io/pypi/pyversions/theonionbox.svg?style=flat-square)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/ralphwetzel/theonionbox/blob/master/LICENSE)
 ![Status](https://img.shields.io/pypi/status/theonionbox.svg?style=flat-square) [![HitCount](http://hits.dwyl.io/ruped24/ruped24/theonionbox.svg?style=flat-square)](http://hits.dwyl.io/ruped24/ruped24/theonionbox)
+![GitHub All Releases](https://img.shields.io/github/downloads/ralphwetzel/theonionbox/total.svg?color=light%20green&style=flat-square)
 
 
 _The Onion Box_ provides a web interface to monitor the operation of
