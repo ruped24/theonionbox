@@ -1,7 +1,7 @@
 FROM python:2.7
 LABEL maintainer="ruped24@gmail.com"
 
-RUN pip install \
+RUN pip install      \
         pip --upgrade \
         && pip install \
         theonionbox
