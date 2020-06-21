@@ -1380,7 +1380,7 @@ The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engi
 To build the image, change to the Docker directory and run `sudo docker build -t theonionbox .`.
 > If you've run `pip` to perform the [installation](#installation) of your Onion Box, you'll find the Docker directory within the [`service`](#verification-of-the-installation) directory.
 
-To then launch *The Onion Box* within the created Docker image, run `sudo docker run --network host -p 8080:8080 theonionbox`.
+To then launch *The Onion Box* within the created Docker image, run `sudo docker run --network host -p 8080:8080 theonionbox`. A pre-built Raspberry Pi 3 image can be found on [Docker Hub](https://hub.docker.com/r/ruped24/theonionbox).
 
 
 ## Usage Monitoring
