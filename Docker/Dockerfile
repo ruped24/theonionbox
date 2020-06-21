@@ -1,4 +1,4 @@
-FROM python:2.7
+FROM python:3.6
 LABEL maintainer="ruped24@gmail.com"
 
 RUN pip install      \
@@ -6,8 +6,8 @@ RUN pip install      \
         && pip install \
         theonionbox
 
-ADD theonionbox.cfg /usr/local/lib/python2.7/site-packages/theonionbox
+COPY theonionbox.cfg /usr/local/lib/python3.6/site-packages/theonionbox
 
 EXPOSE 8080
 
-ENTRYPOINT ["/usr/local/bin/theonionbox", "-c", "/usr/local/lib/python2.7/site-packages/theonionbox/theonionbox.cfg"]
+ENTRYPOINT ["/usr/local/bin/theonionbox", "-c", "/usr/local/lib/python3.6/site-packages/theonionbox/theonionbox.cfg"]
