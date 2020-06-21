@@ -28,6 +28,7 @@ body {
     %# to compensate for the fixed NavBar
     /* padding-top: 50px; */
     font-family: "LatoLatinWeb";
+    position: relative;
 }
 
 /*p {
@@ -138,7 +139,9 @@ body {
 <%
     from bottle import TemplateError
     import logging
+
     css_log = logging.getLogger('theonionbox')
+
     for section in sections:
 
         special = section[0]

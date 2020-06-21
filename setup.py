@@ -5,9 +5,23 @@ import fnmatch
 import setuptools.command.build_ext
 import setuptools.command.sdist
 import setuptools.command.install
-from theonionbox.stamp import __version__, __description__
+
+import pathlib
 
 from distutils.extension import Extension
+
+# This code replaces ...
+#   import theonionbox.stamp as stamp
+# used here up to TOB 19.2
+# but failing meanwhile with pip > 18 due to PEP#517 trouble
+# ref: https://github.com/pypa/pip/issues/6163
+# ref: https://packaging.python.org/guides/single-sourcing-package-version/:
+
+stamp = {}
+with open("theonionbox/stamp.py") as fp:
+    exec(fp.read(), stamp)
+
+# later on we use: stamp['__version__']
 
 # Custom command to compile the latest README.html
 # BTW: grip is quite cool!
@@ -49,6 +63,9 @@ def CompileREADME():
     current_html_hash = 'doit'
     current_rst_hash = 'doit'
 
+    # ensure that 'readme' directory exists
+    pathlib.Path('readme/').mkdir(exist_ok=True)
+
     try:
         with open('readme/README.hash', 'r') as f:
             lines = f.readlines()
@@ -72,7 +89,7 @@ def CompileREADME():
 
     if (old_md_hash != current_md_hash) or (old_html_hash != current_html_hash):
         from grip import export
-        export(path='README.md', out_filename='readme/README.html', title='The Onion Box v{}'.format(__version__))
+        export(path='README.md', out_filename='readme/README.html', title=f"{stamp['__title__']} v{stamp['__version__']}")
         hash_changed = True
     else:
         print('Skiping generation of README.html; files unchanged!')
@@ -260,41 +277,57 @@ def generate_data_files(data_files):
 packages = [
     'theonionbox',
     'theonionbox.tob',
-    'theonionbox.tob.external',
+    'theonionbox.tob.apps',
+    'theonionbox.tob.libraries',
     'theonionbox.tob.livedata',
-    'theonionbox.tob.osxtemp',
-    # 'theonionbox.tob.external.tzlocal'
+    'theonionbox.tob.nodes',
+    'theonionbox.tob.plugin',
+    'theonionbox.tob.stam',
+    'theonionbox.tob.system',
+    'theonionbox.tob.system.darwin',
+    'theonionbox.tob.system.darwin.oxtemp',
+    'theonionbox.tob.system.windows',
+    'theonionbox.tob.utils'
 ]
 
 package_dir = {
     'theonionbox': 'theonionbox',
     'theonionbox.tob': 'theonionbox/tob',
-    'theonionbox.tob.external': 'theonionbox/tob/external',
+    'theonionbox.tob.apps': 'theonionbox/tob/apps',
+    'theonionbox.tob.libraries': 'theonionbox/tob/libraries',
     'theonionbox.tob.livedata': 'theonionbox/tob/livedata',
-    'theonionbox.tob.osxtemp': 'theonionbox/tob/osxtemp',
-    # 'theonionbox.tob.external.tzlocal:': 'theonionbox/tob/external/tzlocal'
+    'theonionbox.tob.nodes': 'theonionbox/tob/nodes',
+    'theonionbox.tob.plugin': 'theonionbox/tob/plugin',
+    'theonionbox.tob.stam': 'theonionbox/tob/stam',
+    'theonionbox.tob.system': 'theonionbox/tob/system',
+    'theonionbox.tob.system.darwin': 'theonionbox/tob/system/darwin',
+    'theonionbox.tob.system.darwin.oxtemp': 'theonionbox/tob/system/darwin/osxtemp',
+    'theonionbox.tob.system.windows': 'theonionbox/tob/system/windows',
+    'theonionbox.tob.utils': 'theonionbox/tob/utils'
 }
 
 package_data = {
-    'theonionbox': ['config/*',
-                    'css/*',
-                    'font/*',
-                    'libs/*',
-                    'pages/*',
-                    'scripts/*',
-                    'sections/*',
-                    'tor/*',
-                    'uptime/*',
-                    ]
+    'theonionbox': [
+        'config/*',
+        'css/*',
+        'libs/*',
+        'pages/*',
+        'scripts/*',
+        'sections/*',
+        'tor/*'
+    ],
+    'theonionbox.tob.system.windows': [
+        'uptime/*'
+    ]
 }
 
 package_data_exclude = {
     'theonionbox': ['sections/controlcenter/*',
-                    'sections/cc/*',
                     ]
 }
 
 data_files = [
+    # ('', ['pyproject.toml']),
     ('docs', ['docs/*.*']),
     ('', ['readme/README.html']),
     ('config', ['theonionbox/config/*.*']),
@@ -302,12 +335,13 @@ data_files = [
     ('service/FreeBSD', ['FreeBSD/theonionbox.sh']),
     ('service/init.d', ['init.d/theonionbox.sh']),
     ('service/systemd', ['systemd/theonionbox.service']),
-    ('service/Docker', ['Docker/Dockerfile', 'Docker/theonionbox.cfg']),
-    ('support', []),
-    ('support/osxtemp', []),
-    ('support/osxtemp/libsmc', ['support/osxtemp/libsmc/LICENSE', 'support/osxtemp/libsmc/Makefile']),
-    ('support/osxtemp/libsmc/include', ['support/osxtemp/libsmc/include/smc.h']),
-    ('support/osxtemp/libsmc/src', ['support/osxtemp/libsmc/src/smc.c']),
+    ('service/Docker', ['Docker/Dockerfile', 'Docker/theonionbox.cfg'])
+    # , ('support', [])
+    # , ('support/osxtemp', [])
+    # , ('support/osxtemp/libsmc', ['support/osxtemp/libsmc/LICENSE', 'support/osxtemp/libsmc/Makefile'])
+    # , ('support/osxtemp/libsmc/include', ['support/osxtemp/libsmc/include/smc.h'])
+    # , ('support/osxtemp/libsmc/src', ['support/osxtemp/libsmc/src/smc.c'])
+    # , ('theonionbox/tob/system/windows/uptime', ['theonionbox/tob/system/windows/uptime/*.*']),
 ]
 # print(generate_data_files(data_files))
 
@@ -355,7 +389,7 @@ setup(
     cmdclass={'sdist': sdist,
               },
     name='theonionbox',
-    version=__version__,
+    version=stamp['__version__'],
     # py_modules=['theonionbox.py'],
     packages=packages,
     package_dir=package_dir,
@@ -368,25 +402,30 @@ setup(
     license='MIT',
     author='Ralph Wetzel',
     author_email='theonionbox@gmx.com',
-    description=__description__,
+    description=f"{stamp['__title__']}: {stamp['__description__']}",
     long_description=open('docs/description.rst', 'rb').read().decode('utf-8'),
     entry_points={
         'console_scripts': [
             'theonionbox = theonionbox.__main__:main']
     },
     install_requires=[
-        'psutil>=5.4.0',
-        'apscheduler>=2.1.2, <3.*; python_version<"3.0"',
+        'psutil>=5.5.0',
+        # 'apscheduler>=2.1.2, <3.*; python_version<"3.0"',
         'apscheduler>=3.4; python_version>="3.0"',
         'requests>=2.21',
         'PySocks>=1.6.7',
-        'bottle>=0.12.13',
-        'stem>=1.5.4, <=1.6',
+        'bottle>=0.12.16',
+        'stem4tob>=1.7.1.post3',
         'tzlocal>=1.5',
-        'futures>=3.2; python_version<"3.0"',
-        'urllib3>=1.24.2, <1.25'    # '<1.25' due to requests 2.21 requirement
+        # 'futures>=3.2; python_version<"3.0"',
+        'urllib3>=1.22',
+        'configupdater>=1.0',
+        'cheroot>=6.5.5',
+        'click>=7.0',
+        'pystray; platform_system == "Darwin"'
     ],
     long_description_content_type='text/x-rst; charset=UTF-8',
+    python_requires='>=3.6',
     classifiers=[
         # https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 5 - Production/Stable',
@@ -403,12 +442,12 @@ setup(
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: BSD :: FreeBSD',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: System :: Networking :: Monitoring',
         'Topic :: Utilities',
     ],
-    platforms=['Linux', 'Windows', 'MacOS X', 'FreeBSD'],
+    platforms=['Linux', 'Windows', 'MacOSX', 'FreeBSD'],
     # ext_modules=extensions(),
 )

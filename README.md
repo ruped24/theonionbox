@@ -1,12 +1,47 @@
 # The Onion Box
 [![GitHub tag](https://img.shields.io/github/tag/ralphwetzel/theonionbox.svg?style=flat-square&label=GitHub)](https://github.com/ralphwetzel/theonionbox/releases/latest)
 ![Github commits (since latest release)](https://img.shields.io/github/commits-since/ralphwetzel/theonionbox/latest.svg?style=flat-square)
+[![License](https://img.shields.io/pypi/l/theonionbox.svg?style=flat-square)](https://github.com/ralphwetzel/theonionbox/blob/master/LICENSE)
+
 [![Latest PyPi](https://img.shields.io/pypi/v/theonionbox.svg?style=flat-square)](https://pypi.org/project/theonionbox)
 ![Supported Python versions](https://img.shields.io/pypi/pyversions/theonionbox.svg?style=flat-square)
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/ralphwetzel/theonionbox/blob/master/LICENSE)
-![Status](https://img.shields.io/pypi/status/theonionbox.svg?style=flat-square) [![HitCount](http://hits.dwyl.io/ruped24/ruped24/theonionbox.svg?style=flat-square)](http://hits.dwyl.io/ruped24/ruped24/theonionbox)
-![GitHub All Releases](https://img.shields.io/github/downloads/ralphwetzel/theonionbox/total.svg?color=light%20green&style=flat-square)
+![Status](https://img.shields.io/pypi/status/theonionbox.svg?style=flat-square)
 
+---
+### The Onion Box v19: Preliminary documentation
+## The ControlCenter
+
+This latest version of The Onion Box introduces three changes of relevance:
+* The current versioning scheme was dropped in preference for [Calendar Versioning](www.calver.org). Thus v19.2 will become the successor of v4.3.1.
+* The Onion Box v19.2 and later requires Python 3.6 or Python 3.7. If you need to operate with Python2, you have to stay with The Onion Box v4.3.1.
+* In addition to the well known (legacy) dashboard, suitable to monitor just a single Tor instance, The Onion Box now provides a ControlCenter mode to monitor a(ny) number of Tor nodes in parallel. That's how it looks like:
+
+![image](docs/images/cc.png)
+
+This is the shorttrack way to enable the ControlCenter mode:
+
+1) Setup your Onion Box as you did before - and you'll get the legacy dashboard (as before).
+2) Create a configuration file, that shall be used to store the configuration data of the ControlCenter. The easiest way to do this on a *nix-type system:
+    ```
+    (theonionbox) ~/theonionbox $ touch cc.cfg
+    ```
+    Please ensure write privileges for that file to the user running your Onion Box.
+3) Tell your Onion Box where to find this configuration file - via the command line parameter `--controlcenter` or `-x`:
+
+```
+(theonionbox) ~/theonionbox $ theonionbox -x cc.cfg
+```
+
+4) Use the + - button in the upper right corner of the ControlCenter to add additional Tor nodes to be monitored.
+
+5) The legacy dashboard with detail data for each node will show up if you follow the dedicated 'Show Details' link of each node.
+
+6) To re-arrange the nodes in your ControlCenter, just Drag & Drop them around.
+
+Enjoy!
+
+
+---
 
 _The Onion Box_ provides a web interface to monitor the operation of
 a [Tor](https://www.torproject.org) node. It is able to monitor any Tor node operated as relay, as bridge and even as client - as long as it can establish a connection to the node and authenticate successfully.
@@ -76,7 +111,7 @@ Above that, _The Onion Box_ is able to display Tor network status protocol data 
 
 
 ## The Web Interface
-_The Onion Box_ generates a 'web page' that displays information regarding your Tor node. This information is split up into a number of sections. If a section is displayed and how the section looks like, depends on the data your box received from the Tor node monitored or knows about it from the Tor network status protocol. The web interface is generated on demand based on the latest data able.
+_The Onion Box_ generates a 'web page' that displays information regarding your Tor node. This information is split up into a number of sections. If a section is displayed and how the section looks like, depends on the data your box received from the Tor node monitored or knows about it from the Tor network status protocol. The web interface is generated on demand based on the latest data available.
 
 > Tip: If a dedicated section is not displayed, just reload the page. Press `F5` or `command + R` to re-run the page creation process.
 
@@ -173,17 +208,16 @@ _Weights_ displays the weights history data as known to Onionoo.
 The number of available charts depends on the age of the Tor node monitored. You may switch the chart displayed via the _History Charts_ buttons.
 
 ---
-
 ### Control Center
-Do you intend to monitor more than one Tor node? Are you interested in the Oninooo data of other Tor nodes? The section _Box | Control Center_ provides that functionality.
+~~Do you intend to monitor more than one Tor node? Are you interested in the Oninooo data of other Tor nodes? The section _Box | Control Center_ provides that functionality.~~
 
 ![image](docs/images/control.png)
 
 #### Search
-Enter a search phrase - which should be a (part of a) nickname of a Tor node or a (portion of a) fingerprint - into the _Search_ field and press enter. This search phrase will be used to query Onionoo - and the result presented in a popup bubble. If the search was successful, you may click on the links provided to display the Tor network status protocol data of that Tor node.
+~~Enter a search phrase - which should be a (part of a) nickname of a Tor node or a (portion of a) fingerprint - into the _Search_ field and press enter. This search phrase will be used to query Onionoo - and the result presented in a popup bubble. If the search was successful, you may click on the links provided to display the Tor network status protocol data of that Tor node.~~
 
 #### Controlled Hosts
-If you provided access control information for additional Tor nodes in the configuration file of your box, those nodes are listed under _Controlled Hosts_. Click on the fingerprint and you will be connected to that Tor node.
+~~If you provided access control information for additional Tor nodes in the configuration file of your box, those nodes are listed under _Controlled Hosts_. Click on the fingerprint and you will be connected to that Tor node.~~
 
 ---
 
@@ -386,8 +420,8 @@ Second finding! There were three additional subdirectories created:
 * `docs`, that holds the images used in this document.
 * `service`, to provide the launchers if you intend to run your box as a [system service / daemon](#the-onion-box-as-system-service-aka-daemon) and the files to support the [Docker](#the-onion-box-docker-support) image setup.
 
-The python packages - for the box and all it's dependencies - are located in `lib/python2.7/site-packages/`. Be aware, that the `python ` path segment might be different (e.g. `lib/python3.6/site-packages/`) if your virtual environment operates with another version of python!  
-_The Box Launcher_ (named as well `theonionbox`) is located in `bin/`, next to the executables of the python version used in your virtual environment.
+The Python packages - for the box and all it's dependencies - are located in `lib/python2.7/site-packages/`. Be aware, that the `python` path segment might be different (e.g. `lib/python3.6/site-packages/`) if your virtual environment operates with another version of Python!
+_The Box Launcher_ (named as well `theonionbox`) is located in `bin/`, next to the executables of the Python version used in your virtual environment.
 
 If the structure of your installation looks equivalent, your box is now cleared for takeoff!
 
@@ -1329,7 +1363,7 @@ ProxyPass "/theonionbox" "http://192.168.178.46:8080"
 After a restart of Apache, browsing to `localhost/theonionbox` on your proxy server should then redirect to `http://192.168.178.46:8080`.
 Doing so should open your *Box* page - yet it looks scrumbled and doesn't operate as it should.
 
-To solve that issue you have to set the parameter `proxy_path` in your `theonionbox.cfg` configuration file to match the `<proxyname>` you defined earlier:
+To solve that issue you have to set the parameter `base_path` in your `theonionbox.cfg` configuration file to match the `<proxyname>` you defined earlier:
 
 ```
 # Per default, the Box operates at the root level of a domain e.g. http://localhost:8080/.
@@ -1337,17 +1371,17 @@ To solve that issue you have to set the parameter `proxy_path` in your `theonion
 # you have to define that base path here. You are not limited to a single path element.
 # Please assure that this is an absolute filepath yet without the domain:port, beginning with a leading slash,
 # no trailing slash, no quotation marks:
-proxy_path = /theonionbox
+base_path = /theonionbox
 ```
 Now everything should work as expected.
 
 ## *The Onion Box* Docker support
-_The Onion Box_ Docker image is available on [hub.docker.com](https://hub.docker.com/search?q=theonionbox&type=image). The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* Docker image build process. Please be aware, that these Docker images for *The Onion Box* only supports [password authentication](#password-authentication).
+The [Docker](Docker) directory holds a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and a dedicated configuration file (`theonionbox.cfg`) to support the operation of *The Onion Box* from a [Docker](http://www.docker.com) image. Please be aware, that this Docker image for *The Onion Box* only supports [password authentication](#password-authentication).
 
-To build an image, change to the Docker directory and run `sudo docker build -t theonionbox .`
+To build the image, change to the Docker directory and run `sudo docker build -t theonionbox .`.
 > If you've run `pip` to perform the [installation](#installation) of your Onion Box, you'll find the Docker directory within the [`service`](#verification-of-the-installation) directory.
 
-To launch *The Onion Box*, run `sudo docker run --network host -p 8080:8080 theonionbox`
+To then launch *The Onion Box* within the created Docker image, run `sudo docker run --network host -p 8080:8080 theonionbox`.
 
 
 ## Usage Monitoring

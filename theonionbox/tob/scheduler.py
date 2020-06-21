@@ -1,9 +1,13 @@
-# coding=UTF-8
+from apscheduler.schedulers import SchedulerNotRunningError     # used by node.py
+from datetime import timedelta
+import logging
+from pytz.tzinfo import NonExistentTimeError, AmbiguousTimeError
+from tzlocal import get_localzone
 
 # to compensate for 'No handlers could be found for logger "apscheduler.scheduler"' message
-import logging
 log = logging.getLogger('apscheduler.scheduler')
 log.addHandler(logging.NullHandler())
+
 
 #####
 # Class to support APScheduler v3 (default) and v2
@@ -44,15 +48,42 @@ class Scheduler(object):
             return None
 
     def add_job(self, func, trigger, args=None, kwargs=None, id=None, **trigger_args):
+
+        s = None
+
         if self.aps3:
-            return self.schedulr.add_job(func, trigger, id=id, replace_existing=True,
-                                         args=args, kwargs=kwargs, **trigger_args)
+            try:
+                s = self.schedulr.add_job(func, trigger, id=id,
+                                           replace_existing=True, args=args, kwargs=kwargs, **trigger_args)
+            except (NonExistentTimeError, AmbiguousTimeError) as err:
+                # Could happen at the beginning of DST period or at the end:
+                # Add one hour to jump ot of the slushy zone
+                if trigger is 'date':
+                    trigger_args['run_date'] += timedelta(hours=1)
+                    s = self.schedulr.add_job(func, trigger, id=id,
+                                              replace_existing=True, args=args, kwargs=kwargs, **trigger_args)
+                else:
+                    raise err
+
+            return s
+
         else:
             if trigger is 'date':
                 run_date = trigger_args['run_date']   # by intention: to raise if not set!
                 del trigger_args['run_date']
-                return self.schedulr.add_date_job(func, run_date, name=id, # replace_existing=True,
+
+                try:
+                    s = self.schedulr.add_date_job(func, run_date, name=id, # replace_existing=True,
                                                   args=args, kwargs=kwargs)
+                except (NonExistentTimeError, AmbiguousTimeError):
+                    # Could happen at the beginning of DST period or at the end:
+                    # Add one hour to jump ot of the slushy zone
+                    run_date += timedelta(hours=1)
+                    s = self.schedulr.add_date_job(func, run_date, name=id, # replace_existing=True,
+                                                  args=args, kwargs=kwargs)
+
+                return s
+
             elif trigger is 'interval':
                 # only partially implemented!!
                 seconds = 0
@@ -100,7 +131,6 @@ class Scheduler(object):
 
     # https://github.com/ralphwetzel/theonionbox/issues/19#issuecomment-263110953
     def check_tz(self):
-        from tzlocal import get_localzone
 
         try:
             # APScheduler 3.x
